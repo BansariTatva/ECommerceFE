@@ -1,4 +1,4 @@
 export { Home } from "./Home";
 export { Product } from "./Product";
-export { Login } from "./Auth/Login"
-export { SignUp } from "./Auth/SignUp"
+export { Login } from "./auth/Login"
+export { SignUp } from "./auth/SignUp"
