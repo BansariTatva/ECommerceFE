@@ -2,8 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import { Container } from "@mui/material";
 import { Navbar, Footer } from "./components";
 import { Home, Product } from "./pages"
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
+import SignUp from "./pages/Auth/SignUp";
+import Login from "./pages/Auth/Login";
 
 function App() {
   return (

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const Login = () => {
+export const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState("");
@@ -122,4 +122,3 @@ const Login = () => {
     );
 };
 
-export default Login;
