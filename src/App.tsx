@@ -1,25 +1,34 @@
 import { Routes, Route } from "react-router-dom";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Navbar, Footer } from "./components";
-import { Home, Product } from "./pages"
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
+import { Product } from "./pages"
+import SignUp from "./pages/auth/SignUp";
+import Login from "./pages/auth/Login";
+import ForgotPassword from "./pages/auth/ForgotPasswordPage";
+import ResetPassword from "./pages/auth/ResetPasswordPage";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Container sx={{ my: 4 }}>
-        <Routes>
-          <Route path="/" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/product" element={<Product />} />
-          {/* <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} /> */}
-        </Routes>
-      </Container>
-      <Footer />
+      <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}>
+        <Navbar />
+        <Container sx={{
+          my: 4, flex: 1, display: 'flex'
+        }}>
+          <Routes>
+            <Route path="/" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+          </Routes>
+        </Container>
+        <Footer />
+      </Box>
     </>
   );
 }

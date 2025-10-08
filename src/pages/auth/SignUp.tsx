@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Container,
     Box,
@@ -7,9 +7,9 @@ import {
     Checkbox,
     FormControlLabel,
     Typography,
-    Link,
     Alert,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
     const [formData, setFormData]: any = useState({
@@ -74,7 +74,6 @@ const SignUp = () => {
         <Container maxWidth="sm">
             <Box
                 sx={{
-                    mt: 8,
                     p: 4,
                     boxShadow: 3,
                     borderRadius: 2,
@@ -165,7 +164,7 @@ const SignUp = () => {
                         label={
                             <>
                                 I accept the{" "}
-                                <Link href="/terms" target="_blank">
+                                <Link to="/terms" target="_blank">
                                     terms and conditions
                                 </Link>
                             </>
@@ -188,7 +187,7 @@ const SignUp = () => {
                     </Button>
 
                     <Typography align="center">
-                        Already have an account? <Link href="/login">Login here</Link>
+                        Already have an account? <Link to="/login">Login here</Link>
                     </Typography>
                 </Box>
             </Box>

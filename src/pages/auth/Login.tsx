@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
     Container,
     Box,
     TextField,
     Button,
     Typography,
-    Link,
     Alert,
     IconButton,
     InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -26,7 +26,7 @@ const Login = () => {
     const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
     const validate = () => {
-        let tempErrors = {};
+        const tempErrors = {};
         if (!formData.email) {
             tempErrors.email = "Email is required";
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
@@ -52,7 +52,6 @@ const Login = () => {
         <Container maxWidth="sm">
             <Box
                 sx={{
-                    mt: 8,
                     p: 4,
                     boxShadow: 3,
                     borderRadius: 2,
@@ -110,11 +109,11 @@ const Login = () => {
                     </Button>
 
                     <Typography align="center" variant="body2">
-                        Don't have an account? <Link href="/">Sign Up</Link>
+                        Don't have an account? <Link to="/">Sign Up</Link>
                     </Typography>
 
                     <Typography align="center" variant="body2" sx={{ mt: 1 }}>
-                        <Link href="/forgot-password">Forgot Password?</Link>
+                        <Link to="/forgot-password">Forgot Password?</Link>
                     </Typography>
                 </Box>
             </Box>
