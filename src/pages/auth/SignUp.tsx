@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 
 export const SignUp = () => {
@@ -27,6 +29,7 @@ export const SignUp = () => {
     const [errors, setErrors]: any = useState({});
     const [success, setSuccess] = useState("");
     const [message, setMessage] = useState("")
+    const navigate = useNavigate()
 
     const handleChange = (e: any) => {
         const { name, value, type, checked } = e.target;
@@ -63,21 +66,17 @@ export const SignUp = () => {
             try {
                 console.log("Form Data:", formData);
                 formData.role = "User";
-                const response = await axios.post(
-                    "http://localhost:8081/auth/signUp",
+                const response = await api.post(
+                    "/auth/signUp",
                     formData
                 );
                 console.log("response===", JSON.stringify(response));
                 setMessage("User registered successfully!");
                 console.log(response.data);
                 setSuccess("Account created successfully!");
-                // setFormData({
-                //     name: "",
-                //     email: "",
-                //     password: "",
-                //     confirmPassword: "",
-                //     acceptTerms: false,
-                // });
+                setTimeout(() => {
+                    navigate("/login"); // Redirect to login page
+                }, 1000); // 1-second delay for user to see success message
                 setErrors({});
             } catch (err: any) {
                 if (err.response) {
