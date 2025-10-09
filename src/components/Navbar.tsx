@@ -16,7 +16,7 @@ export const Navbar = () => {
         </Typography>
 
         <div>
-          <Button color="inherit" component={Link} to="/products">
+          <Button color="inherit" component={Link} to="/product">
             Products
           </Button>
           <Button color="inherit" component={Link} to="/about">

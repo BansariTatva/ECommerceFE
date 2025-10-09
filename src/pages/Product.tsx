@@ -7,10 +7,13 @@ const dummyProducts = [
 ];
 
 export const Product = () => {
+
+  console.log("InProduct..")
   return (
     <Grid container spacing={3}>
       {dummyProducts.map((product) => (
-        <Grid component={'div'} item xs={12} sm={6} md={4} key={product.id}>
+        // <Grid component={'div'} item xs={12} sm={6} md={4} key={product.id}>
+        <Grid component={'div'} key={product.id}>
           <Card>
             <CardMedia component="img" height="180" image={product.image} alt={product.name} />
             <CardContent>
