@@ -12,7 +12,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+export const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState("");
@@ -121,4 +121,3 @@ const Login = () => {
     );
 };
 
-export default Login;

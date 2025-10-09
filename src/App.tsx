@@ -1,11 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import { Navbar, Footer } from "./components";
-import { Product } from "./pages"
-import SignUp from "./pages/auth/SignUp";
-import Login from "./pages/auth/Login";
-import ForgotPassword from "./pages/auth/ForgotPasswordPage";
-import ResetPassword from "./pages/auth/ResetPasswordPage";
+import { Login, Product, SignUp } from "./pages"
+
+import ForgotPassword from "./pages/Auth/ForgotPasswordPage";
+import ResetPassword from "./pages/Auth/ResetPasswordPage";
 
 function App() {
   return (
