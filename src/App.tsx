@@ -1,9 +1,33 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import { Navbar, Footer } from "./components";
-import { Home, Product } from "./pages"
-import SignUp from "./pages/Auth/SignUp";
-import Login from "./pages/Auth/Login";
+import { Home, Product, SignUp, Login } from "./pages"
+import { useEffect } from "react";
+import OAuth2Callback from "./pages/Auth/OAuth2Callback";
+
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("accessToken");
+  return token ? children : <Navigate to="/login" />;
+};
+
+// Redirect Component to handle root URL
+const RedirectBasedOnToken = () => {
+  const location = useLocation();
+  const token = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      if (token) {
+        window.location.href = "/login"; // Force redirect to dashboard if token exists
+      } else {
+        window.location.href = "/login"; // Redirect to login if no token
+      }
+    }
+  }, [location.pathname, token]);
+
+  // Return null or a loading state while redirecting
+  return null;
+};
 
 function App() {
   return (
@@ -11,12 +35,24 @@ function App() {
       <Navbar />
       <Container sx={{ my: 4 }}>
         <Routes>
-          <Route path="/" element={<SignUp />} />
+          {/* Handle root URL redirection */}
+          <Route path="/" element={<RedirectBasedOnToken />} />
+          <Route path="/oauth2/callback" element={<OAuth2Callback />} />
+
+          <Route path="/signUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/product" element={<Product />} />
-          {/* <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} /> */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Product />
+              </ProtectedRoute>
+            }
+          />
+          {/* Catch-all redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Container>
       <Footer />
