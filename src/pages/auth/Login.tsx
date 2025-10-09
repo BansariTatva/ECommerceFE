@@ -48,9 +48,6 @@ export const Login = () => {
         window.location.href = "http://localhost:8081/oauth2/authorization/google"; // Initiate OAuth2 flow
     };
 
-
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
@@ -142,14 +139,14 @@ export const Login = () => {
 
                     <Typography align="center" variant="body2">
                         Don't have an account? <Link to="/signUp">Sign Up</Link>
-                    </Typography>
+                    </Typography >
 
                     <Typography align="center" variant="body2" sx={{ mt: 1 }}>
                         <Link to="/forgot-password">Forgot Password?</Link>
                     </Typography>
-                </Box>
-            </Box>
-        </Container>
+                </Box >
+            </Box >
+        </Container >
     );
 };
 
