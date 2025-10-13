@@ -10,8 +10,12 @@ import {
     Alert,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+
+export const SignUp = () => {
     const [formData, setFormData]: any = useState({
         name: "",
         email: "",
@@ -24,6 +28,8 @@ const SignUp = () => {
 
     const [errors, setErrors]: any = useState({});
     const [success, setSuccess] = useState("");
+    const [message, setMessage] = useState("")
+    const navigate = useNavigate()
 
     const handleChange = (e: any) => {
         const { name, value, type, checked } = e.target;
@@ -53,20 +59,35 @@ const SignUp = () => {
         return Object.keys(tempErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        console.log("e---", e)
         e.preventDefault();
         if (validate()) {
-            console.log("Form Data:", formData);
-            setSuccess("Account created successfully!");
-            setFormData({
-                name: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-                acceptTerms: false,
-            });
-            setErrors({});
-            // Call your API here
+            try {
+                console.log("Form Data:", formData);
+                formData.role = "User";
+                const response = await api.post(
+                    "/auth/signUp",
+                    formData
+                );
+                console.log("response===", JSON.stringify(response));
+                setMessage("User registered successfully!");
+                console.log(response.data);
+                setSuccess("Account created successfully!");
+                setTimeout(() => {
+                    navigate("/login"); // Redirect to login page
+                }, 1000); // 1-second delay for user to see success message
+                setErrors({});
+            } catch (err: any) {
+                if (err.response) {
+                    // ✅ This contains the JSON returned by backend
+                    setErrors(err.response.data);
+                    console.log("Backend errors:", err.response.data);
+                } else {
+                    console.log("Network or other error:", err.message);
+                }
+            }
+
         }
     };
 
@@ -195,4 +216,3 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;

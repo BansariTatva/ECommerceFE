@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import React, { useEffect, useState } from "react";
 import {
     Container,
     Box,
@@ -11,12 +12,17 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+export const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
     const [success, setSuccess] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,12 +44,31 @@ const Login = () => {
         return Object.keys(tempErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleGoogleLogin = () => {
+        window.location.href = "http://localhost:8081/oauth2/authorization/google"; // Initiate OAuth2 flow
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
-            console.log("Login data:", formData);
-            setSuccess("Logged in successfully!");
-            setErrors({});
+            try {
+                const response: any = await api.post(
+                    "/auth/logIn",
+                    formData
+                );
+                console.log("response===", JSON.stringify(response));
+                if (response?.accessToken) localStorage.setItem("accessToken", response.accessToken); // Store access token
+                if (response?.refreshToken) localStorage.setItem("refreshToken", response.refreshToken); // Store refresh token
+                setSuccess("Login successful!");
+                setSuccess("Logged in successfully!");
+                setTimeout(() => {
+                    navigate("/dashboard"); // Redirect to dashboard or protected route
+                }, 1000);
+                setErrors({});
+            } catch (error: any) {
+                setErrors(error.message || "Login failed");
+            }
+
             // Call your login API here
         }
     };
@@ -108,17 +133,20 @@ const Login = () => {
                         Login
                     </Button>
 
+                    <Button variant="outlined" color="primary" onClick={handleGoogleLogin} fullWidth>
+                        Login with Google
+                    </Button>
+
                     <Typography align="center" variant="body2">
-                        Don't have an account? <Link to="/">Sign Up</Link>
-                    </Typography>
+                        Don't have an account? <Link to="/signUp">Sign Up</Link>
+                    </Typography >
 
                     <Typography align="center" variant="body2" sx={{ mt: 1 }}>
                         <Link to="/forgot-password">Forgot Password?</Link>
                     </Typography>
-                </Box>
-            </Box>
-        </Container>
+                </Box >
+            </Box >
+        </Container >
     );
 };
 
-export default Login;

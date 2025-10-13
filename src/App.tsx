@@ -1,34 +1,61 @@
-import { Routes, Route } from "react-router-dom";
-import { Box, Container } from "@mui/material";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Container } from "@mui/material";
 import { Navbar, Footer } from "./components";
-import { Product } from "./pages"
-import SignUp from "./pages/auth/SignUp";
-import Login from "./pages/auth/Login";
-import ForgotPassword from "./pages/auth/ForgotPasswordPage";
-import ResetPassword from "./pages/auth/ResetPasswordPage";
+import { Home, Product, SignUp, Login } from "./pages"
+import { useEffect } from "react";
+import OAuth2Callback from "./pages/Auth/OAuth2Callback";
+
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("accessToken");
+  return token ? children : <Navigate to="/login" />;
+};
+
+// Redirect Component to handle root URL
+const RedirectBasedOnToken = () => {
+  const location = useLocation();
+  const token = localStorage.getItem("accessToken");
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      if (token) {
+        window.location.href = "/login"; // Force redirect to dashboard if token exists
+      } else {
+        window.location.href = "/login"; // Redirect to login if no token
+      }
+    }
+  }, [location.pathname, token]);
+
+  // Return null or a loading state while redirecting
+  return null;
+};
 
 function App() {
   return (
     <>
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh'
-      }}>
-        <Navbar />
-        <Container sx={{
-          my: 4, flex: 1, display: 'flex'
-        }}>
-          <Routes>
-            <Route path="/" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/product" element={<Product />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-          </Routes>
-        </Container>
-        <Footer />
-      </Box>
+      <Navbar />
+      <Container sx={{ my: 4 }}>
+        <Routes>
+          {/* Handle root URL redirection */}
+          <Route path="/" element={<RedirectBasedOnToken />} />
+          <Route path="/oauth2/callback" element={<OAuth2Callback />} />
+
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/product" element={<Product />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Product />
+              </ProtectedRoute>
+            }
+          />
+          {/* Catch-all redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Container>
+      <Footer />
     </>
   );
 }
