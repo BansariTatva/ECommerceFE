@@ -17,9 +17,6 @@ const OAuth2Callback = () => {
 
             // Navigate to dashboard
             navigate("/dashboard", { replace: true });
-        } else {
-            // No tokens → redirect to login
-            navigate("/", { replace: true });
         }
     }, [navigate]);
 

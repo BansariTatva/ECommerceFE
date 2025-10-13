@@ -50,6 +50,7 @@ export const Login = () => {
 
 
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validate()) {
@@ -140,7 +141,7 @@ export const Login = () => {
                     </Button>
 
                     <Typography align="center" variant="body2">
-                        Don't have an account? <Link href="/signUp">Sign Up</Link>
+                        Don't have an account? <Link to="/signUp">Sign Up</Link>
                     </Typography>
 
                     <Typography align="center" variant="body2" sx={{ mt: 1 }}>

@@ -1,7 +1,7 @@
 import axios, { type AxiosRequestConfig } from 'axios';
 
 // Create an Axios instance with base configuration
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8081';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8765/api/v1';
 const api = axios.create({
     baseURL: BASE_URL,
     timeout: 10000,
