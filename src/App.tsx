@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import { Navbar, Footer } from "./components";
-import { Home, Product, SignUp, Login } from "./pages"
+import { Orders, Product, SignUp, Login } from "./pages"
 import { useEffect } from "react";
-import OAuth2Callback from "./pages/Auth/OAuth2Callback";
+import OAuth2Callback from "./pages/auth/OAuth2Callback";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("accessToken");
@@ -42,12 +42,13 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/product" element={<Product />} />
+          <Route path="/products" element={<Product />} />
+          <Route path="/orders" element={<Orders />} />
           <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <Product />
+                <Route path="/orders" element={<Orders />} />
               </ProtectedRoute>
             }
           />
