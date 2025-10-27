@@ -1,10 +1,15 @@
 import React from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 import { useFormik } from "formik";
-import { resetPasswordValidationSchema } from "../../schemas/resetPasswordValidationSchema";
+import { resetPasswordValidationSchema } from "../../../../schemas/resetPasswordValidationSchema";
+import { useLocation } from "react-router-dom";
+import { useResetPasswordHook } from "../resetPasswordHook";
 
 const ResetPassword: React.FC = () => {
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('token');
+  const { resetPassword } = useResetPasswordHook();
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -12,10 +17,9 @@ const ResetPassword: React.FC = () => {
     },
     validationSchema: resetPasswordValidationSchema,
     onSubmit: async (values) => {
-      console.log("values", values);
+      await resetPassword(values.password, id);
     }
   })
-
 
   return (
     <Box

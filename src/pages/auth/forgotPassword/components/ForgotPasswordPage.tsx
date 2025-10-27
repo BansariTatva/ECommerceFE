@@ -1,16 +1,19 @@
 import React from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 import { useFormik } from "formik";
-import { forgotValidationSchema } from "../../schemas/forgotSchema";
+import { forgotValidationSchema } from "../../../../schemas/forgotSchema";
+import { useForgotPasswordHook } from "../forgotPasswordHook";
 
 const ForgotPassword: React.FC = () => {
+  const { forgotPassword } = useForgotPasswordHook();
   const formik = useFormik({
     initialValues: {
       email: ""
     },
     validationSchema: forgotValidationSchema,
     onSubmit: async (values) => {
-      console.log("values", values);
+      const email = values.email;
+      await forgotPassword(email);
     }
   })
 

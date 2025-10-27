@@ -4,8 +4,8 @@ import { Navbar, Footer } from "./components";
 import { Product } from "./pages"
 import SignUp from "./pages/auth/SignUp";
 import Login from "./pages/auth/Login";
-import ForgotPassword from "./pages/auth/ForgotPasswordPage";
-import ResetPassword from "./pages/auth/ResetPasswordPage";
+import ForgotPassword from "./pages/auth/forgotPassword/components/ForgotPasswordPage";
+import ResetPassword from "./pages/auth/resetPassword/components/ResetPasswordPage";
 
 function App() {
   return (

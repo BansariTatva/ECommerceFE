@@ -41,10 +41,8 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            console.log("Login data:", formData);
             setSuccess("Logged in successfully!");
             setErrors({});
-            // Call your login API here
         }
     };
 

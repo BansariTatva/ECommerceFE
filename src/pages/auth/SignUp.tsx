@@ -56,7 +56,6 @@ const SignUp = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            console.log("Form Data:", formData);
             setSuccess("Account created successfully!");
             setFormData({
                 name: "",
@@ -66,7 +65,6 @@ const SignUp = () => {
                 acceptTerms: false,
             });
             setErrors({});
-            // Call your API here
         }
     };
 
